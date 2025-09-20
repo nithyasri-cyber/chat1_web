@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
+import os  # Needed to get Render's assigned port
 
-app = Flask(__name__)
+app = Flask(_name_)
 
 # Simple chatbot function
 def chatbot_response(user_input):
@@ -24,5 +25,7 @@ def get_bot_response():
     user_text = request.args.get('msg')
     return chatbot_response(user_text)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if _name_ == "_main_":
+    # Use Render's assigned port or default 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
