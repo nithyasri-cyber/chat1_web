@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat1 Web</title>
+    <style>
+        body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+        #chatbox { width: 100%; max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
+        .user { color: blue; }
+        .bot { color: green; }
+        input { width: 80%; padding: 10px; }
+        button { padding: 10px; }
+        p { margin: 5px 0; }
+    </style>
+    <script>
+        function sendMessage() {
+            let userInput = document.getElementById("userInput").value;
+            let chat = document.getElementById("chat");
+            let p = document.createElement("p");
+            p.className = "user";
+            p.textContent = "You: " + userInput;
+            chat.appendChild(p);
+
+            fetch("/get?msg=" + userInput)
+                .then(response => response.text())
+                .then(data => {
+                    let botP = document.createElement("p");
+                    botP.className = "bot";
+                    botP.textContent = "Bot: " + data;
+                    chat.appendChild(botP);
+                    document.getElementById("userInput").value = "";
+                });
+        }
+    </script>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>Chat1 Web</h2>
+        <div id="chat"></div>
+        <input type="text" id="userInput" placeholder="Type a message" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</body>
+</html>
